@@ -9,6 +9,12 @@ public class CustomClassesTestSignalSignal {
 	private var _head:Node;
 	private var _tail:Node;
 
+	private var _dispatching:Boolean;
+	private var _addQueueHead:Node;
+	private var _addQueueTail:Node;
+	private var _removeQueueHead:Node;
+	private var _removeQueueTail:Node;
+
 	public function CustomClassesTestSignalSignal() {
 
 	}
@@ -28,21 +34,44 @@ public class CustomClassesTestSignalSignal {
 			return;
 		}
 		node = new Node(listener, once);
-		if (_tail) {
-			_tail.next = node;
-			_tail = node;
+		if (_dispatching) {
+			if (_addQueueTail) {
+				_addQueueTail.next = node;
+				_addQueueTail = node;
+			} else {
+				_addQueueHead = node;
+				_addQueueTail = node;
+			}
+			return;
 		} else {
-			_head = node;
-			_tail = node;
+			if (_tail) {
+				_tail.next = node;
+				_tail = node;
+			} else {
+				_head = node;
+				_tail = node;
+			}
 		}
 	}
 
 	public function remove(listener:ICustomClassesTestSignalHandler):void {
+		if (_dispatching) {
+			node = new Node(listener, false);
+			if (_removeQueueTail) {
+				_removeQueueTail.next = node;
+				_removeQueueTail = node;
+			} else {
+				_removeQueueHead = node;
+				_removeQueueTail = node;
+			}
+			return;
+		}
 		var node:Node = _head;
 		var prev:Node = null;
 		while (node) {
 			if (node.listener == listener) {
 				removeNode(prev, node);
+				return;
 			}
 			prev = node;
 			node = node.next;
@@ -55,6 +84,7 @@ public class CustomClassesTestSignalSignal {
 	}
 
 	public function has(listener:ICustomClassesTestSignalHandler):Boolean {
+		//TODO if dispatching
 		return getNode(listener) != null;
 	}
 
@@ -68,26 +98,27 @@ public class CustomClassesTestSignalSignal {
 	}
 
 	private function removeNode(prev:Node, node:Node):void {
-	    if (prev) {
-	        if (node.next) {
-                prev.next = node.next;
-	        } else {
-                prev.next = null;
-                _tail = prev;
-	        }
-	    } else {
-	        if (node.next) {
-                _head = node.next;
-	        } else {
-	            _head = null;
-	            _tail = null;
-	        }
-	    }
+		if (prev) {
+			if (node.next) {
+				prev.next = node.next;
+			} else {
+				prev.next = null;
+				_tail = prev;
+			}
+		} else {
+			if (node.next) {
+				_head = node.next;
+			} else {
+				_head = null;
+				_tail = null;
+			}
+		}
 	}
 
-	public function dispatch(attribute:com.example.Attribute, value:int):void {
+	public function dispatch(attribute:Attribute, value:int):void {
 		var node:Node = _head;
 		var prev:Node = null;
+		_dispatching = true;
 		while (node) {
 			node.listener.handleCustomClassesTestSignal(attribute, value);
 			if (node.once) {
@@ -95,6 +126,20 @@ public class CustomClassesTestSignalSignal {
 			}
 			prev = node;
 			node = node.next;
+		}
+		_dispatching = false;
+
+		node = _addQueueHead;
+		while (node) {
+			register(node.listener, node.once);
+			node = node.next;
+		}
+		_addQueueHead = null;
+		_addQueueTail = null;
+
+		node = _removeQueueHead;
+		while(node){
+			//TODO
 		}
 	}
 }
