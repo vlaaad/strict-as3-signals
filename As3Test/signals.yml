@@ -1,0 +1,8 @@
+com.example.generated.signals.BlankTestSignal: ~
+com.example.generated.signals.ArgsTestSignal:
+  object: Object
+  count: int
+  string: String
+com.example.generated.signals.CustomClassesTestSignal:
+  attribute: com.example.Attribute
+  value: int
