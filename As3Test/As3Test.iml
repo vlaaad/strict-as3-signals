@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="As3Test">
+    <configurations>
+      <configuration name="As3Test" pure-as="true" main-class="As3Test" output-file="As3Test.swf" output-folder="$MODULE_DIR$/../out/production/As3Test">
+        <dependencies target-player="10.0">
+          <entries>
+            <entry library-id="6fd5eed8-e12e-4444-b3ba-5d3a9c2182bf">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flexsdk" />
+        </dependencies>
+        <compiler-options />
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="flexsdk" jdkType="__CompositeFlexSdk__" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library type="flex">
+        <properties id="6fd5eed8-e12e-4444-b3ba-5d3a9c2182bf" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/org" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

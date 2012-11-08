@@ -5,6 +5,7 @@ import com.example.generated.signals.CustomClassesTestSignalSignal;
 import com.example.generated.signals.ICustomClassesTestSignalHandler;
 
 import flash.display.Sprite;
+import flash.text.TextField;
 
 import org.hamcrest.assertThat;
 import org.hamcrest.core.not;
@@ -13,12 +14,20 @@ import org.hamcrest.object.isFalse;
 import org.hamcrest.object.isTrue;
 import org.hamcrest.object.nullValue;
 
+[SWF(width = 800, height = 600, frameRate=60)]
 public class As3Test extends Sprite implements ICustomClassesTestSignalHandler {
+
 	private var attribute:Attribute;
 	private var value:int;
 	private var handleCount:int;
 
+	private static const tf:TextField = new TextField();
+
 	public function As3Test() {
+		addChild(tf);
+		tf.width = 800;
+		tf.height = 600;
+
 		const hp:Attribute = new Attribute("hp");
 		const damage:Attribute = new Attribute("damage");
 		const exp:Attribute = new Attribute("exp");
@@ -197,6 +206,56 @@ public class As3Test extends Sprite implements ICustomClassesTestSignalHandler {
 		signal.dispatch(damage, 18);
 		assertThat("after dispatch signal has added while dispatching handlers", signal.has(a), isTrue());
 		assertThat("if handler is added while handling, it will not receive dispatched params", a.attribute, nullValue());
+		signal.clear();
+
+		//remove handler while handling
+		a = new Handler();
+		var e:RemoveHandlerOnHandleHandler = new RemoveHandlerOnHandleHandler(signal, a);
+		signal.add(e);
+		signal.add(a);
+		signal.dispatch(exp, 19);
+		assertThat("after dispatch signal do not have removed while dispatch handler", signal.has(a), isFalse());
+		assertThat("if registered handler was removed while handling, it will receive dispatched params in this dispatch", a.attribute, equalTo(exp));
+		signal.dispatch(damage, 20);
+		assertThat("on next dispatch handler removed while previous dispatching will not receive dispatched params", a.attribute, not(equalTo(damage)));
+		signal.clear();
+
+		//add many times
+		a = new Handler();
+		signal.add(a);
+		signal.add(a);
+		signal.add(a);
+		signal.dispatch(exp, 21);
+		assertThat("if signal added many times, it receives dispatched params only once", a.handleCount, equalTo(1));
+
+		log("All tests passed OK");
+
+		performanceCheck();
+
+	}
+
+	private function performanceCheck():void {
+		new AddOncePerformance().start(dispatchPerformance);
+	}
+
+	private function dispatchPerformance():void {
+		new DispatchPerformance().start(massDispatchPerformance);
+	}
+
+	private function massDispatchPerformance():void {
+		new MassDispatchPerformance().start(removePerformance);
+	}
+
+	private function removePerformance():void {
+		new RemovePerformance().start(typeCastingPerformance);
+	}
+
+	private function typeCastingPerformance():void {
+		new TypeCastingPerformance().start();
+	}
+
+	public static function log(string:String):void {
+		tf.appendText(string + "\n");
 	}
 
 	public function handleCustomClassesTestSignal(attribute:Attribute, value:int):void {
@@ -211,13 +270,19 @@ import com.example.Attribute;
 import com.example.generated.signals.CustomClassesTestSignalSignal;
 import com.example.generated.signals.ICustomClassesTestSignalHandler;
 
+import org.hamcrest.assertThat;
+import org.hamcrest.object.isFalse;
+import org.hamcrest.object.isTrue;
+
 class Handler implements ICustomClassesTestSignalHandler {
 	public var attribute:Attribute;
 	public var value:int;
+	public var handleCount:int;
 
 	public function handleCustomClassesTestSignal(attribute:Attribute, value:int):void {
 		this.attribute = attribute;
 		this.value = value;
+		handleCount += 1;
 	}
 }
 
@@ -233,5 +298,21 @@ class AddHandlerOnHandleHandler implements ICustomClassesTestSignalHandler {
 
 	public function handleCustomClassesTestSignal(attribute:Attribute, value:int):void {
 		signal.add(toAdd);
+		assertThat("on adding while dispatching has method returns true for added handler", signal.has(toAdd), isTrue());
+	}
+}
+
+class RemoveHandlerOnHandleHandler implements ICustomClassesTestSignalHandler {
+	private var signal:CustomClassesTestSignalSignal;
+	private var toRemove:ICustomClassesTestSignalHandler;
+
+	public function RemoveHandlerOnHandleHandler(signal:CustomClassesTestSignalSignal, toRemove:ICustomClassesTestSignalHandler) {
+		this.signal = signal;
+		this.toRemove = toRemove;
+	}
+
+	public function handleCustomClassesTestSignal(attribute:Attribute, value:int):void {
+		signal.remove(toRemove);
+		assertThat("on removing while dispatching has method returns false for removed handler", signal.has(toRemove), isFalse());
 	}
 }
