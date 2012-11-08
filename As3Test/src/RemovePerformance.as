@@ -3,7 +3,7 @@
  * Date: 08.11.12
  */
 package {
-import com.example.generated.signals.BlankTestSignalSignal;
+import com.example.generated.signals.BlankTestSignal;
 
 import flash.utils.getTimer;
 
@@ -13,7 +13,7 @@ public class RemovePerformance {
 	private const ITERATION_COUNT:int = 1000;
 
 	private const s:Signal = new Signal();
-	private const strict:BlankTestSignalSignal = new BlankTestSignalSignal();
+	private const strict:BlankTestSignal = new BlankTestSignal();
 	private const h0:RemoveSelfHandler = new RemoveSelfHandler(strict);
 	private const h1:RemoveSelfHandler = new RemoveSelfHandler(strict);
 	private const h2:RemoveSelfHandler = new RemoveSelfHandler(strict);
@@ -81,14 +81,14 @@ public class RemovePerformance {
 }
 }
 
-import com.example.generated.signals.BlankTestSignalSignal;
+import com.example.generated.signals.BlankTestSignal;
 import com.example.generated.signals.IBlankTestSignalHandler;
 
 class RemoveSelfHandler implements IBlankTestSignalHandler {
-	private var signal:BlankTestSignalSignal;
+	private var signal:BlankTestSignal;
 
 
-	public function RemoveSelfHandler(signal:BlankTestSignalSignal) {
+	public function RemoveSelfHandler(signal:BlankTestSignal) {
 		this.signal = signal;
 	}
 

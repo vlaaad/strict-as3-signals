@@ -3,7 +3,7 @@
  * Date: 08.11.12
  */
 package {
-import com.example.generated.signals.BlankTestSignalSignal;
+import com.example.generated.signals.BlankTestSignal;
 
 import flash.utils.getTimer;
 
@@ -38,7 +38,7 @@ public class DispatchPerformance {
 	}
 
 	private function runStrictSignals():void {
-		const s:BlankTestSignalSignal = new BlankTestSignalSignal();
+		const s:BlankTestSignal = new BlankTestSignal();
 		for (var i:int = 0; i < LISTENERS_COUNT; i++) {
 			s.add(new EmptyHandler());
 		}

@@ -16,7 +16,7 @@ import ${params[arg]};
     </#list>
 </#if>
 
-public class ${name?cap_first}Signal {
+public class ${name?cap_first} {
 	private var _head:Node;
 	private var _tail:Node;
 
@@ -24,7 +24,7 @@ public class ${name?cap_first}Signal {
     private var _queueHead:QueueNode;
     private var _queueTail:QueueNode;
 
-public function ${name?cap_first}Signal() {
+public function ${name?cap_first}() {
 
 	}
 

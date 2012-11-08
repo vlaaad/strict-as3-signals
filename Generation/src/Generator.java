@@ -49,7 +49,7 @@ public class Generator {
         root.put("params", params);
         root.put("name", classNameWithoutPackage);
         root.put("package", getPackage(signalKey));
-        GenerateUtil.generate(targetSourcePath + pathFromClassName + classNameWithoutPackage + "Signal.as", "signal.as.ftl", root);
+        GenerateUtil.generate(targetSourcePath + pathFromClassName + classNameWithoutPackage + ".as", "signal.as.ftl", root);
         GenerateUtil.generate(targetSourcePath + pathFromClassName + "I" + classNameWithoutPackage + "Handler.as", "handler.as.ftl", root);
     }
 

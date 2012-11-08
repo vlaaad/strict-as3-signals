@@ -1,7 +1,7 @@
 package {
 
 import com.example.Attribute;
-import com.example.generated.signals.CustomClassesTestSignalSignal;
+import com.example.generated.signals.CustomClassesTestSignal;
 import com.example.generated.signals.ICustomClassesTestSignalHandler;
 
 import flash.display.Sprite;
@@ -33,7 +33,7 @@ public class As3Test extends Sprite implements ICustomClassesTestSignalHandler {
 		const exp:Attribute = new Attribute("exp");
 
 		//basic adding
-		const signal:CustomClassesTestSignalSignal = new CustomClassesTestSignalSignal();
+		const signal:CustomClassesTestSignal = new CustomClassesTestSignal();
 		var currentCount:int = handleCount;
 		signal.add(this);
 		signal.dispatch(damage, 1);
@@ -267,7 +267,7 @@ public class As3Test extends Sprite implements ICustomClassesTestSignalHandler {
 }
 
 import com.example.Attribute;
-import com.example.generated.signals.CustomClassesTestSignalSignal;
+import com.example.generated.signals.CustomClassesTestSignal;
 import com.example.generated.signals.ICustomClassesTestSignalHandler;
 
 import org.hamcrest.assertThat;
@@ -287,10 +287,10 @@ class Handler implements ICustomClassesTestSignalHandler {
 }
 
 class AddHandlerOnHandleHandler implements ICustomClassesTestSignalHandler {
-	private var signal:CustomClassesTestSignalSignal;
+	private var signal:CustomClassesTestSignal;
 	private var toAdd:ICustomClassesTestSignalHandler;
 
-	public function AddHandlerOnHandleHandler(signal:CustomClassesTestSignalSignal, toAdd:ICustomClassesTestSignalHandler) {
+	public function AddHandlerOnHandleHandler(signal:CustomClassesTestSignal, toAdd:ICustomClassesTestSignalHandler) {
 		this.signal = signal;
 		this.toAdd = toAdd;
 
@@ -303,10 +303,10 @@ class AddHandlerOnHandleHandler implements ICustomClassesTestSignalHandler {
 }
 
 class RemoveHandlerOnHandleHandler implements ICustomClassesTestSignalHandler {
-	private var signal:CustomClassesTestSignalSignal;
+	private var signal:CustomClassesTestSignal;
 	private var toRemove:ICustomClassesTestSignalHandler;
 
-	public function RemoveHandlerOnHandleHandler(signal:CustomClassesTestSignalSignal, toRemove:ICustomClassesTestSignalHandler) {
+	public function RemoveHandlerOnHandleHandler(signal:CustomClassesTestSignal, toRemove:ICustomClassesTestSignalHandler) {
 		this.signal = signal;
 		this.toRemove = toRemove;
 	}

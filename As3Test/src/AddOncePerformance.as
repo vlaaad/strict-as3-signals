@@ -3,7 +3,7 @@
  * Date: 08.11.12
  */
 package {
-import com.example.generated.signals.BlankTestSignalSignal;
+import com.example.generated.signals.BlankTestSignal;
 
 import flash.utils.getTimer;
 
@@ -14,7 +14,7 @@ public class AddOncePerformance {
 	private const ITERATION_COUNT:uint = 10000;
 
 	private var _s:Signal;
-	private var _strictS:BlankTestSignalSignal;
+	private var _strictS:BlankTestSignal;
 
 	private var n0:EmptyHandler = new EmptyHandler();
 	private var n1:EmptyHandler = new EmptyHandler();
@@ -27,7 +27,7 @@ public class AddOncePerformance {
 
 	public function AddOncePerformance() {
 		_s = new Signal();
-		_strictS = new BlankTestSignalSignal();
+		_strictS = new BlankTestSignal();
 
 	}
 

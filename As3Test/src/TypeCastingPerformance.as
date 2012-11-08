@@ -3,7 +3,7 @@
  * Date: 08.11.12
  */
 package {
-import com.example.generated.signals.ArgsTestSignalSignal;
+import com.example.generated.signals.ArgsTestSignal;
 
 import flash.utils.getTimer;
 
@@ -36,7 +36,7 @@ public class TypeCastingPerformance {
 	}
 
 	private function runStrictAs3Signals():void {
-		const s:ArgsTestSignalSignal = new ArgsTestSignalSignal();
+		const s:ArgsTestSignal = new ArgsTestSignal();
 		for (var i:int = 0; i < LISTENERS_COUNT; i++) {
 			s.add(new ArgsHandler());
 		}

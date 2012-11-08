@@ -4,7 +4,7 @@
 package com.example.generated.signals {
 
 
-public class BlankTestSignalSignal {
+public class ArgsTestSignal {
 	private var _head:Node;
 	private var _tail:Node;
 
@@ -12,19 +12,19 @@ public class BlankTestSignalSignal {
     private var _queueHead:QueueNode;
     private var _queueTail:QueueNode;
 
-public function BlankTestSignalSignal() {
+public function ArgsTestSignal() {
 
 	}
 
-	public function add(listener:IBlankTestSignalHandler):void {
+	public function add(listener:IArgsTestSignalHandler):void {
 		register(listener, false);
 	}
 
-	public function addOnce(listener:IBlankTestSignalHandler):void {
+	public function addOnce(listener:IArgsTestSignalHandler):void {
 		register(listener, true);
 	}
 
-	private function register(listener:IBlankTestSignalHandler, once:Boolean):void {
+	private function register(listener:IArgsTestSignalHandler, once:Boolean):void {
 		if (_dispatching) {
 			addQueueNode(true, once, listener);
 			return;
@@ -44,7 +44,7 @@ public function BlankTestSignalSignal() {
 		}
 	}
 
-	private function addQueueNode(add:Boolean, once:Boolean, listener:IBlankTestSignalHandler):void {
+	private function addQueueNode(add:Boolean, once:Boolean, listener:IArgsTestSignalHandler):void {
 		if (!_queueTail) {
 			var queueNode:QueueNode = new QueueNode(add, listener, once);
 			_queueHead = queueNode;
@@ -56,7 +56,7 @@ public function BlankTestSignalSignal() {
 		}
 	}
 
-	public function remove(listener:IBlankTestSignalHandler):void {
+	public function remove(listener:IArgsTestSignalHandler):void {
 		if (_dispatching) {
 			addQueueNode(false, false, listener);
 			return;
@@ -78,7 +78,7 @@ public function BlankTestSignalSignal() {
 		_tail = null;
 	}
 
-	public function has(listener:IBlankTestSignalHandler):Boolean {
+	public function has(listener:IArgsTestSignalHandler):Boolean {
 		var exists:Boolean = getNode(listener) != null;
 		if (_dispatching) {
 			var queueNode:QueueNode = _queueHead;
@@ -92,7 +92,7 @@ public function BlankTestSignalSignal() {
 		return exists;
 	}
 
-	private function getNode(listener:IBlankTestSignalHandler):Node {
+	private function getNode(listener:IArgsTestSignalHandler):Node {
 		var node:Node = _head;
 		while (node) {
 			if (node.listener == listener) return node;
@@ -119,12 +119,12 @@ public function BlankTestSignalSignal() {
 	    }
 	}
 
-	public function dispatch():void {
+	public function dispatch(object:Object, count:int, string:String):void {
 		var node:Node = _head;
 		var prev:Node = null;
         _dispatching = true;
 		while (node) {
-			node.listener.handleBlankTestSignal();
+			node.listener.handleArgsTestSignal(object, count, string);
 			if (node.once) {
 				removeNode(prev, node);
 			} else {
@@ -149,14 +149,14 @@ public function BlankTestSignalSignal() {
 }
 }
 
-import com.example.generated.signals.IBlankTestSignalHandler;
+import com.example.generated.signals.IArgsTestSignalHandler;
 
 class Node {
 	public var next:Node;
-	public var listener:IBlankTestSignalHandler;
+	public var listener:IArgsTestSignalHandler;
 	public var once:Boolean;
 
-	public function Node(listener:IBlankTestSignalHandler, once:Boolean) {
+	public function Node(listener:IArgsTestSignalHandler, once:Boolean) {
 		this.listener = listener;
 		this.once = once;
 	}
@@ -164,11 +164,11 @@ class Node {
 class QueueNode {
 
 	public var add:Boolean;
-	public var listener:IBlankTestSignalHandler;
+	public var listener:IArgsTestSignalHandler;
 	public var once:Boolean;
 	public var next:QueueNode;
 
-	public function QueueNode(add:Boolean, listener:IBlankTestSignalHandler, once:Boolean) {
+	public function QueueNode(add:Boolean, listener:IArgsTestSignalHandler, once:Boolean) {
 		this.add = add;
 		this.listener = listener;
 		this.once = once;
