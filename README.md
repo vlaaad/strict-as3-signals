@@ -16,7 +16,7 @@ By signals generation with freemarker templates (http://freemarker.org/).
 For more info about what yml is and how to work with it, visit http://yaml.org/spec/1.1/ 
 By default there is three sample signals ("BlankTestSignal", "ArgsTestSignal" and "CustomClassesTestSignal") described in signals.yml. What yaml params mean:
 
-    > - in "BlankTestSignal" means signal requires no arguments to dispatch (this is null in yaml specification)
+    > - "~" in BlankTestSignal means signal requires no arguments to dispatch (this is null in yaml specification)
     > - other signals descriptions contain key-value pairs like "string: String" or "attribute: com.example.Attribute", where keys are arguments names, values are class names in dispatch\handle methods.
 
 5. In your command line interface change current directory to your project root 
