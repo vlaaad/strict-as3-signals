@@ -11,7 +11,7 @@ By signals generation with freemarker templates (http://freemarker.org/).
 
 1. Go to downloads section
 2. Download strict-as3-signals.zip
-3. Unpack it to your project root. now there should be signals.yml and templates folder.
+3. Unpack it to your project root. now there should be strict-as3-signals-generation.jar, signals.yml and templates folder.
 4. Edit "signals.yml" to describe signals that your need. 
 For more info about what yml is and how to work with it, visit http://yaml.org/spec/1.1/ 
 By default there is three sample signals ("BlankTestSignal", "ArgsTestSignal" and "CustomClassesTestSignal") described in signals.yaml. What yaml params mean:
